@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Ports;
 using System.Windows.Forms;
+using OfficeOpenXml;
 
 
 namespace Hledej
@@ -11,8 +13,9 @@ namespace Hledej
     public partial class Form1 : Form
     {
 
-        SerialPort port;
-        ComSetting serialSetting;
+        static SerialPort port;
+        static ComSetting serialSetting;
+        static List<Part> parts;
 
         public Form1()
         {
@@ -20,6 +23,7 @@ namespace Hledej
             this.Load += MainForm_Load;
             this.Shown += MainForm_Show;
             this.FormClosing += MainForm_FormClosing;
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // Nastavení LicenseContext
         }
 
         class ComSetting
@@ -29,6 +33,43 @@ namespace Hledej
             public int DataBits { get; set; }
             public Parity Parity { get; set; }
             public StopBits StopBits { get; set; }
+        }
+
+        class Part
+        {
+            public string KZM { get; set; }
+            public string PartNumber { get; set; }
+            public string Nazev { get; set; }
+            public string Pocet { get; set; }
+            public string PocetInventura { get; set; }
+            public string Umisteni { get; set; }
+            public string Doplneno { get; set; }
+        }
+
+
+        static List<Part> ReadPartsFromExcel(string filePath)
+        {
+            List<Part> parts = new List<Part>();
+            using (ExcelPackage package = new ExcelPackage(new FileInfo(filePath)))
+            {
+                ExcelWorksheet worksheet = package.Workbook.Worksheets[0]; // První list
+                int rowCount = worksheet.Dimension.Rows;
+                int colCount = worksheet.Dimension.Columns;
+                for (int row = 2; row <= rowCount; row++) // Začínáme na druhém řádku, předpokládáme záhlaví na prvním řádku
+                {
+                    Part part = new Part();
+                    part.KZM = worksheet.Cells[row, 1].Value?.ToString();
+                    part.PartNumber = worksheet.Cells[row, 2].Value?.ToString();
+                    part.Nazev = $"{worksheet.Cells[row, 3].Value?.ToString()} {worksheet.Cells[row, 4].Value?.ToString()}".Trim(); // Sloučení Název1 a Název2 s mezerou
+                    part.Pocet = worksheet.Cells[row, 5].Value?.ToString();
+                    part.PocetInventura = worksheet.Cells[row, 6].Value?.ToString();
+                    part.Umisteni = worksheet.Cells[row, 7].Value?.ToString();
+                    part.Doplneno = worksheet.Cells[row, 8].Value?.ToString();
+                    // Přidání části do seznamu
+                    parts.Add(part);
+                }
+            }
+            return parts;
         }
 
 
@@ -115,6 +156,7 @@ namespace Hledej
             return comSetting;
         }
 
+
         private void MainForm_Load(object sender, EventArgs e)
         {
             serialSetting = ReadComSetting(@"comset.txt");
@@ -136,6 +178,7 @@ namespace Hledej
             {
                 MessageBox.Show(ex.Message, @"Problem se souborem comset.txt pro nastaveni COM portu", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+            parts = ReadPartsFromExcel(@"Sklad.xlsx");
         }
 
         private void MainForm_Show(object sender, EventArgs e)
