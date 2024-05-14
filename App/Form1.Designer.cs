@@ -1,4 +1,4 @@
-﻿namespace App
+﻿namespace Hledej
 {
     partial class Form1
     {
@@ -11,6 +11,7 @@
         /// Uvolněte všechny používané prostředky.
         /// </summary>
         /// <param name="disposing">hodnota true, když by se měl spravovaný prostředek odstranit; jinak false.</param>
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -19,6 +20,7 @@
             }
             base.Dispose(disposing);
         }
+
 
         #region Kód generovaný Návrhářem Windows Form
 
@@ -87,14 +89,16 @@
             this.count = new System.Windows.Forms.Label();
             this.pos = new System.Windows.Forms.Label();
             this.name = new System.Windows.Forms.TextBox();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.cOMPORTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // serialPort1
+            // 
+            this.serialPort1.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.ComReceived);
             // 
             // findText
             // 
+            this.findText.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.findText.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.findText.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.findText.Location = new System.Drawing.Point(138, 39);
@@ -105,6 +109,8 @@
             // 
             // bq
             // 
+            this.bq.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.bq.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.bq.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.bq.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.bq.Location = new System.Drawing.Point(111, 398);
@@ -116,6 +122,8 @@
             // 
             // bw
             // 
+            this.bw.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.bw.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.bw.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.bw.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.bw.Location = new System.Drawing.Point(170, 398);
@@ -127,6 +135,8 @@
             // 
             // be
             // 
+            this.be.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.be.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.be.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.be.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.be.Location = new System.Drawing.Point(229, 398);
@@ -138,6 +148,8 @@
             // 
             // br
             // 
+            this.br.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.br.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.br.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.br.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.br.Location = new System.Drawing.Point(288, 398);
@@ -149,6 +161,8 @@
             // 
             // bt
             // 
+            this.bt.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.bt.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.bt.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.bt.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.bt.Location = new System.Drawing.Point(347, 398);
@@ -160,6 +174,8 @@
             // 
             // bz
             // 
+            this.bz.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.bz.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.bz.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.bz.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.bz.Location = new System.Drawing.Point(406, 398);
@@ -171,6 +187,8 @@
             // 
             // bu
             // 
+            this.bu.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.bu.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.bu.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.bu.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.bu.Location = new System.Drawing.Point(465, 398);
@@ -182,6 +200,8 @@
             // 
             // bi
             // 
+            this.bi.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.bi.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.bi.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.bi.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.bi.Location = new System.Drawing.Point(524, 398);
@@ -193,6 +213,8 @@
             // 
             // bo
             // 
+            this.bo.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.bo.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.bo.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.bo.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.bo.Location = new System.Drawing.Point(583, 398);
@@ -204,6 +226,8 @@
             // 
             // bp
             // 
+            this.bp.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.bp.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.bp.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.bp.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.bp.Location = new System.Drawing.Point(642, 398);
@@ -215,6 +239,8 @@
             // 
             // bl
             // 
+            this.bl.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.bl.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.bl.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.bl.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.bl.Location = new System.Drawing.Point(602, 458);
@@ -226,6 +252,8 @@
             // 
             // bk
             // 
+            this.bk.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.bk.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.bk.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.bk.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.bk.Location = new System.Drawing.Point(543, 458);
@@ -237,6 +265,8 @@
             // 
             // bj
             // 
+            this.bj.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.bj.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.bj.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.bj.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.bj.Location = new System.Drawing.Point(484, 458);
@@ -248,6 +278,8 @@
             // 
             // bh
             // 
+            this.bh.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.bh.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.bh.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.bh.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.bh.Location = new System.Drawing.Point(425, 458);
@@ -259,6 +291,8 @@
             // 
             // bg
             // 
+            this.bg.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.bg.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.bg.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.bg.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.bg.Location = new System.Drawing.Point(366, 458);
@@ -270,6 +304,8 @@
             // 
             // bf
             // 
+            this.bf.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.bf.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.bf.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.bf.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.bf.Location = new System.Drawing.Point(307, 458);
@@ -281,6 +317,8 @@
             // 
             // bd
             // 
+            this.bd.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.bd.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.bd.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.bd.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.bd.Location = new System.Drawing.Point(248, 458);
@@ -292,6 +330,8 @@
             // 
             // bs
             // 
+            this.bs.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.bs.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.bs.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.bs.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.bs.Location = new System.Drawing.Point(189, 458);
@@ -303,6 +343,8 @@
             // 
             // ba
             // 
+            this.ba.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.ba.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ba.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.ba.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.ba.Location = new System.Drawing.Point(130, 458);
@@ -314,6 +356,8 @@
             // 
             // bdash
             // 
+            this.bdash.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.bdash.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.bdash.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.bdash.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.bdash.Location = new System.Drawing.Point(624, 519);
@@ -325,6 +369,8 @@
             // 
             // bdot
             // 
+            this.bdot.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.bdot.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.bdot.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.bdot.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.bdot.Location = new System.Drawing.Point(565, 519);
@@ -336,6 +382,8 @@
             // 
             // bm
             // 
+            this.bm.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.bm.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.bm.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.bm.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.bm.Location = new System.Drawing.Point(506, 519);
@@ -347,6 +395,8 @@
             // 
             // bn
             // 
+            this.bn.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.bn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.bn.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.bn.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.bn.Location = new System.Drawing.Point(447, 519);
@@ -358,6 +408,8 @@
             // 
             // bb
             // 
+            this.bb.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.bb.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.bb.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.bb.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.bb.Location = new System.Drawing.Point(388, 519);
@@ -369,6 +421,8 @@
             // 
             // bv
             // 
+            this.bv.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.bv.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.bv.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.bv.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.bv.Location = new System.Drawing.Point(329, 519);
@@ -380,6 +434,8 @@
             // 
             // bc
             // 
+            this.bc.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.bc.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.bc.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.bc.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.bc.Location = new System.Drawing.Point(270, 519);
@@ -391,6 +447,8 @@
             // 
             // bx
             // 
+            this.bx.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.bx.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.bx.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.bx.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.bx.Location = new System.Drawing.Point(211, 519);
@@ -402,6 +460,8 @@
             // 
             // by
             // 
+            this.by.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.by.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.by.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.by.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.by.Location = new System.Drawing.Point(152, 519);
@@ -413,6 +473,8 @@
             // 
             // b0
             // 
+            this.b0.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.b0.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.b0.BackColor = System.Drawing.SystemColors.Highlight;
             this.b0.Font = new System.Drawing.Font("Consolas", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.b0.ForeColor = System.Drawing.SystemColors.ControlLightLight;
@@ -425,6 +487,8 @@
             // 
             // b9
             // 
+            this.b9.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.b9.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.b9.BackColor = System.Drawing.SystemColors.Highlight;
             this.b9.Font = new System.Drawing.Font("Consolas", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.b9.ForeColor = System.Drawing.SystemColors.ControlLightLight;
@@ -437,6 +501,8 @@
             // 
             // b8
             // 
+            this.b8.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.b8.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.b8.BackColor = System.Drawing.SystemColors.Highlight;
             this.b8.Font = new System.Drawing.Font("Consolas", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.b8.ForeColor = System.Drawing.SystemColors.ControlLightLight;
@@ -449,6 +515,8 @@
             // 
             // b7
             // 
+            this.b7.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.b7.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.b7.BackColor = System.Drawing.SystemColors.Highlight;
             this.b7.Font = new System.Drawing.Font("Consolas", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.b7.ForeColor = System.Drawing.SystemColors.ControlLightLight;
@@ -461,6 +529,8 @@
             // 
             // b6
             // 
+            this.b6.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.b6.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.b6.BackColor = System.Drawing.SystemColors.Highlight;
             this.b6.Font = new System.Drawing.Font("Consolas", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.b6.ForeColor = System.Drawing.SystemColors.ControlLightLight;
@@ -473,6 +543,8 @@
             // 
             // b5
             // 
+            this.b5.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.b5.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.b5.BackColor = System.Drawing.SystemColors.Highlight;
             this.b5.Font = new System.Drawing.Font("Consolas", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.b5.ForeColor = System.Drawing.SystemColors.ControlLightLight;
@@ -485,6 +557,8 @@
             // 
             // b4
             // 
+            this.b4.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.b4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.b4.BackColor = System.Drawing.SystemColors.Highlight;
             this.b4.Font = new System.Drawing.Font("Consolas", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.b4.ForeColor = System.Drawing.SystemColors.ControlLightLight;
@@ -497,6 +571,8 @@
             // 
             // b3
             // 
+            this.b3.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.b3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.b3.BackColor = System.Drawing.SystemColors.Highlight;
             this.b3.Font = new System.Drawing.Font("Consolas", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.b3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
@@ -509,6 +585,8 @@
             // 
             // b2
             // 
+            this.b2.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.b2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.b2.BackColor = System.Drawing.SystemColors.Highlight;
             this.b2.Font = new System.Drawing.Font("Consolas", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.b2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
@@ -521,6 +599,8 @@
             // 
             // b1
             // 
+            this.b1.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.b1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.b1.BackColor = System.Drawing.SystemColors.Highlight;
             this.b1.Font = new System.Drawing.Font("Consolas", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.b1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
@@ -533,6 +613,7 @@
             // 
             // find
             // 
+            this.find.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.find.BackColor = System.Drawing.SystemColors.HotTrack;
             this.find.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.find.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
@@ -545,6 +626,8 @@
             // 
             // b32
             // 
+            this.b32.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.b32.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.b32.BackColor = System.Drawing.SystemColors.Highlight;
             this.b32.Font = new System.Drawing.Font("Consolas", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.b32.ForeColor = System.Drawing.SystemColors.ControlLightLight;
@@ -557,6 +640,8 @@
             // 
             // b320
             // 
+            this.b320.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.b320.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.b320.BackColor = System.Drawing.SystemColors.Highlight;
             this.b320.Font = new System.Drawing.Font("Consolas", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.b320.ForeColor = System.Drawing.SystemColors.ControlLightLight;
@@ -569,6 +654,8 @@
             // 
             // bspace
             // 
+            this.bspace.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.bspace.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.bspace.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.bspace.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.bspace.Location = new System.Drawing.Point(197, 587);
@@ -579,6 +666,8 @@
             // 
             // bleft
             // 
+            this.bleft.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.bleft.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.bleft.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.bleft.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.bleft.ForeColor = System.Drawing.SystemColors.InfoText;
@@ -591,6 +680,8 @@
             // 
             // bright
             // 
+            this.bright.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.bright.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.bright.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.bright.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.bright.ForeColor = System.Drawing.SystemColors.InfoText;
@@ -603,6 +694,8 @@
             // 
             // backspace
             // 
+            this.backspace.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.backspace.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.backspace.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.backspace.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.backspace.ForeColor = System.Drawing.SystemColors.InfoText;
@@ -615,6 +708,7 @@
             // 
             // delete
             // 
+            this.delete.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.delete.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.delete.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.delete.ForeColor = System.Drawing.SystemColors.InfoText;
@@ -627,6 +721,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.groupBox1.Controls.Add(this.bminus);
             this.groupBox1.Controls.Add(this.bplus);
             this.groupBox1.Controls.Add(this.label5);
@@ -725,22 +820,6 @@
             this.name.Size = new System.Drawing.Size(470, 29);
             this.name.TabIndex = 1;
             // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cOMPORTToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(804, 24);
-            this.menuStrip1.TabIndex = 53;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
-            // cOMPORTToolStripMenuItem
-            // 
-            this.cOMPORTToolStripMenuItem.Name = "cOMPORTToolStripMenuItem";
-            this.cOMPORTToolStripMenuItem.Size = new System.Drawing.Size(78, 20);
-            this.cOMPORTToolStripMenuItem.Text = "COM PORT";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -794,82 +873,75 @@
             this.Controls.Add(this.bw);
             this.Controls.Add(this.bq);
             this.Controls.Add(this.findText);
-            this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "HledejTo!";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.IO.Ports.SerialPort serialPort1;
-        private System.Windows.Forms.TextBox findText;
-        private System.Windows.Forms.Button bq;
-        private System.Windows.Forms.Button bw;
-        private System.Windows.Forms.Button be;
-        private System.Windows.Forms.Button br;
-        private System.Windows.Forms.Button bt;
-        private System.Windows.Forms.Button bz;
-        private System.Windows.Forms.Button bu;
-        private System.Windows.Forms.Button bi;
-        private System.Windows.Forms.Button bo;
-        private System.Windows.Forms.Button bp;
-        private System.Windows.Forms.Button bl;
-        private System.Windows.Forms.Button bk;
-        private System.Windows.Forms.Button bj;
-        private System.Windows.Forms.Button bh;
-        private System.Windows.Forms.Button bg;
-        private System.Windows.Forms.Button bf;
-        private System.Windows.Forms.Button bd;
-        private System.Windows.Forms.Button bs;
-        private System.Windows.Forms.Button ba;
-        private System.Windows.Forms.Button bdash;
-        private System.Windows.Forms.Button bdot;
-        private System.Windows.Forms.Button bm;
-        private System.Windows.Forms.Button bn;
-        private System.Windows.Forms.Button bb;
-        private System.Windows.Forms.Button bv;
-        private System.Windows.Forms.Button bc;
-        private System.Windows.Forms.Button bx;
-        private System.Windows.Forms.Button by;
-        private System.Windows.Forms.Button b0;
-        private System.Windows.Forms.Button b9;
-        private System.Windows.Forms.Button b8;
-        private System.Windows.Forms.Button b7;
-        private System.Windows.Forms.Button b6;
-        private System.Windows.Forms.Button b5;
-        private System.Windows.Forms.Button b4;
-        private System.Windows.Forms.Button b3;
-        private System.Windows.Forms.Button b2;
-        private System.Windows.Forms.Button b1;
-        private System.Windows.Forms.Button find;
-        private System.Windows.Forms.Button b32;
-        private System.Windows.Forms.Button b320;
-        private System.Windows.Forms.Button bspace;
-        private System.Windows.Forms.Button bleft;
-        private System.Windows.Forms.Button bright;
-        private System.Windows.Forms.Button backspace;
-        private System.Windows.Forms.Button delete;
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox name;
         private System.Windows.Forms.Label pos;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem cOMPORTToolStripMenuItem;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label count;
         private System.Windows.Forms.Button bminus;
         private System.Windows.Forms.Button bplus;
+        public System.Windows.Forms.TextBox findText;
+        public System.Windows.Forms.Button bq;
+        public System.Windows.Forms.Button bw;
+        public System.Windows.Forms.Button be;
+        public System.Windows.Forms.Button br;
+        public System.Windows.Forms.Button bt;
+        public System.Windows.Forms.Button bz;
+        public System.Windows.Forms.Button bu;
+        public System.Windows.Forms.Button bi;
+        public System.Windows.Forms.Button bo;
+        public System.Windows.Forms.Button bp;
+        public System.Windows.Forms.Button bl;
+        public System.Windows.Forms.Button bk;
+        public System.Windows.Forms.Button bj;
+        public System.Windows.Forms.Button bh;
+        public System.Windows.Forms.Button bg;
+        public System.Windows.Forms.Button bf;
+        public System.Windows.Forms.Button bd;
+        public System.Windows.Forms.Button bs;
+        public System.Windows.Forms.Button ba;
+        public System.Windows.Forms.Button bdash;
+        public System.Windows.Forms.Button bdot;
+        public System.Windows.Forms.Button bm;
+        public System.Windows.Forms.Button bn;
+        public System.Windows.Forms.Button bb;
+        public System.Windows.Forms.Button bv;
+        public System.Windows.Forms.Button bc;
+        public System.Windows.Forms.Button bx;
+        public System.Windows.Forms.Button by;
+        public System.Windows.Forms.Button b0;
+        public System.Windows.Forms.Button b9;
+        public System.Windows.Forms.Button b8;
+        public System.Windows.Forms.Button b7;
+        public System.Windows.Forms.Button b6;
+        public System.Windows.Forms.Button b5;
+        public System.Windows.Forms.Button b4;
+        public System.Windows.Forms.Button b3;
+        public System.Windows.Forms.Button b2;
+        public System.Windows.Forms.Button b1;
+        public System.Windows.Forms.Button find;
+        public System.Windows.Forms.Button b32;
+        public System.Windows.Forms.Button b320;
+        public System.Windows.Forms.Button bspace;
+        public System.Windows.Forms.Button bleft;
+        public System.Windows.Forms.Button bright;
+        public System.Windows.Forms.Button backspace;
+        public System.Windows.Forms.Button delete;
+        public System.Windows.Forms.GroupBox groupBox1;
+        public System.IO.Ports.SerialPort serialPort1;
     }
 }
 
