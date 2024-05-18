@@ -5,6 +5,7 @@ using System.IO.Ports;
 using System.Linq;
 using System.Windows.Forms;
 using OfficeOpenXml;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 
 namespace Hledej
@@ -222,6 +223,10 @@ namespace Hledej
                 {
                     MessageBox.Show(@"Port COM nejde otevrit!", @"Chyba na COM portu", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
+                else
+                {
+                    port.DataReceived += new SerialDataReceivedEventHandler(ComReceived);
+                }
             }
             catch (Exception ex)
             {
@@ -234,9 +239,15 @@ namespace Hledej
         {
         }
 
-        private void ComReceived(object sender, SerialDataReceivedEventArgs e)
+        public void ComReceived(object sender, SerialDataReceivedEventArgs e)
         {
-
+            SerialPort serialPort = (SerialPort)sender;
+            string data = serialPort.ReadExisting(); // Přečtení všech dostupných dat
+            findText.Invoke((MethodInvoker)delegate {
+                // Zde aktualizujte obsah TextBoxu
+                findText.Text = data;
+            });
+            //find_Click(null, null);
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -277,24 +288,32 @@ namespace Hledej
                     {
                         Console.Beep(233, 80);
                         Console.Beep(233, 80);
+                        findText.Focus();
                     }
                     else
                     {
                         listBox1.Items.Clear();
                         for (int i = 0; i < listParts.Count; i++)
                         {
-                            listBox1.Items.Add("KZM: " + listParts[i].KZM + " | " + 
+                            listBox1.Items.Add( 
                                 "PN: " + listParts[i].PartNumber + " | " +
-                                "Nazev: " + listParts[i].Nazev + " | " +
-                                "Misto: " + listParts[i].Umisteni);
+                                "Název: " + listParts[i].Nazev + " | " +
+                                "Místo: " + listParts[i].Umisteni  + " | " +
+                                "Počet: " + listParts[i].Pocet);
                         }
                         listBox1.Show();
                         buttoncloselist.Show();
+                        listBox1.Focus();
+                        listBox1.SelectedIndex = 0;
                     }
                 }
                 else 
-                { 
-
+                {
+                    // 32.1575.400-06
+                    name.Text = tryFind.Nazev;
+                    count.Text = tryFind.Pocet;
+                    pos.Text = tryFind.Umisteni;
+                    findText.Focus();
                 }
             }
         }
@@ -304,6 +323,147 @@ namespace Hledej
             listBox1.Items.Clear();
             listBox1.Hide();
             buttoncloselist.Hide();
+            findText.Focus();
+        }
+
+        private void EditKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true; // Potlačí zvukový signál nebo jiný efekt
+                find_Click(sender, e);
+            }
+        }
+
+
+        private string ExtractNazevFromText(string text)
+        {
+            string prefix = "Název: ";
+            int startIndex = text.IndexOf(prefix);
+            if (startIndex != -1)
+            {
+                startIndex += prefix.Length;
+                int endIndex = text.IndexOf('|', startIndex);
+                if (endIndex == -1)
+                {
+                    endIndex = text.Length;
+                }
+                return text.Substring(startIndex, endIndex - startIndex).Trim();
+            }
+            return string.Empty;
+        }
+
+        private string ExtractMistoFromText(string text)
+        {
+            string prefix = "Místo: ";
+            int startIndex = text.IndexOf(prefix);
+            if (startIndex != -1)
+            {
+                startIndex += prefix.Length;
+                int endIndex = text.IndexOf('|', startIndex);
+                if (endIndex == -1)
+                {
+                    endIndex = text.Length;
+                }
+                return text.Substring(startIndex, endIndex - startIndex).Trim();
+            }
+            return string.Empty;
+        }
+
+
+        private string ExtractPocetFromText(string text)
+        {
+            string prefix = "Počet: ";
+            int startIndex = text.IndexOf(prefix);
+            if (startIndex != -1)
+            {
+                startIndex += prefix.Length;
+                int endIndex = text.IndexOf('|', startIndex);
+                if (endIndex == -1)
+                {
+                    endIndex = text.Length;
+                }
+                return text.Substring(startIndex, endIndex - startIndex).Trim();
+            }
+            return string.Empty;
+        }
+
+
+        private void PartsListSelectedChanged(object sender, EventArgs e)
+        {
+            if (listBox1.SelectedItem != null)
+            {
+                name.Text = ExtractNazevFromText(listBox1.SelectedItem.ToString());
+                count.Text = ExtractPocetFromText(listBox1.SelectedItem.ToString());
+                pos.Text = ExtractMistoFromText(listBox1.SelectedItem.ToString());
+                //listBox1.SelectedItem.
+            }
+        }
+
+        private void PartsListKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                e.SuppressKeyPress = true; // Potlačí zvukový signál nebo jiný efekt
+                listBox1.Items.Clear();
+                listBox1.Hide();
+                buttoncloselist.Hide();
+                findText.Focus();
+            }
+        }
+
+        // smaze cely text v editboxu
+        private void delete_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // smaze pismenko - stejne jako backspace
+        private void backspace_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // mezernik
+        private void bspace_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // sipka vlevo
+        private void bleft_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // sipka vpravo
+        private void bright_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // tecka
+        private void bdot_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // pomlcka
+        private void bdash_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // text 32.
+        private void b32_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // text 320.
+        private void b320_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

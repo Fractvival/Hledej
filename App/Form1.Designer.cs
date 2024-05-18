@@ -30,9 +30,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.findText = new System.Windows.Forms.TextBox();
             this.bq = new System.Windows.Forms.Button();
             this.bw = new System.Windows.Forms.Button();
@@ -94,10 +92,6 @@
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // serialPort1
-            // 
-            this.serialPort1.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.ComReceived);
-            // 
             // findText
             // 
             this.findText.Anchor = System.Windows.Forms.AnchorStyles.Top;
@@ -108,6 +102,7 @@
             this.findText.Size = new System.Drawing.Size(518, 38);
             this.findText.TabIndex = 0;
             this.findText.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.findText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EditKeyDown);
             // 
             // bq
             // 
@@ -368,6 +363,7 @@
             this.bdash.TabIndex = 31;
             this.bdash.Text = "-";
             this.bdash.UseVisualStyleBackColor = false;
+            this.bdash.Click += new System.EventHandler(this.bdash_Click);
             // 
             // bdot
             // 
@@ -381,6 +377,7 @@
             this.bdot.TabIndex = 30;
             this.bdot.Text = ".";
             this.bdot.UseVisualStyleBackColor = false;
+            this.bdot.Click += new System.EventHandler(this.bdot_Click);
             // 
             // bm
             // 
@@ -640,6 +637,7 @@
             this.b32.TabIndex = 45;
             this.b32.Text = "32.";
             this.b32.UseVisualStyleBackColor = false;
+            this.b32.Click += new System.EventHandler(this.b32_Click);
             // 
             // b320
             // 
@@ -654,6 +652,7 @@
             this.b320.TabIndex = 46;
             this.b320.Text = "320.";
             this.b320.UseVisualStyleBackColor = false;
+            this.b320.Click += new System.EventHandler(this.b320_Click);
             // 
             // bspace
             // 
@@ -666,6 +665,7 @@
             this.bspace.Size = new System.Drawing.Size(404, 45);
             this.bspace.TabIndex = 47;
             this.bspace.UseVisualStyleBackColor = false;
+            this.bspace.Click += new System.EventHandler(this.bspace_Click);
             // 
             // bleft
             // 
@@ -680,6 +680,7 @@
             this.bleft.TabIndex = 48;
             this.bleft.Text = "<<";
             this.bleft.UseVisualStyleBackColor = false;
+            this.bleft.Click += new System.EventHandler(this.bleft_Click);
             // 
             // bright
             // 
@@ -694,6 +695,7 @@
             this.bright.TabIndex = 49;
             this.bright.Text = ">>";
             this.bright.UseVisualStyleBackColor = false;
+            this.bright.Click += new System.EventHandler(this.bright_Click);
             // 
             // backspace
             // 
@@ -706,8 +708,9 @@
             this.backspace.Name = "backspace";
             this.backspace.Size = new System.Drawing.Size(85, 106);
             this.backspace.TabIndex = 50;
-            this.backspace.Text = "<| ZPĚT";
+            this.backspace.Text = "<| SMAŽ";
             this.backspace.UseVisualStyleBackColor = false;
+            this.backspace.Click += new System.EventHandler(this.backspace_Click);
             // 
             // delete
             // 
@@ -721,6 +724,7 @@
             this.delete.TabIndex = 51;
             this.delete.Text = "SMAZAT";
             this.delete.UseVisualStyleBackColor = false;
+            this.delete.Click += new System.EventHandler(this.delete_Click);
             // 
             // groupBox1
             // 
@@ -828,20 +832,27 @@
             // listBox1
             // 
             this.listBox1.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.listBox1.Font = new System.Drawing.Font("Bahnschrift", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(11, 337);
+            this.listBox1.HorizontalScrollbar = true;
+            this.listBox1.ItemHeight = 25;
+            this.listBox1.Location = new System.Drawing.Point(11, 462);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(781, 290);
+            this.listBox1.ScrollAlwaysVisible = true;
+            this.listBox1.Size = new System.Drawing.Size(781, 179);
             this.listBox1.TabIndex = 53;
             this.listBox1.Visible = false;
+            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.PartsListSelectedChanged);
+            this.listBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PartsListKeyDown);
             // 
             // buttoncloselist
             // 
+            this.buttoncloselist.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.buttoncloselist.BackColor = System.Drawing.SystemColors.HotTrack;
             this.buttoncloselist.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.buttoncloselist.Location = new System.Drawing.Point(680, 300);
+            this.buttoncloselist.Location = new System.Drawing.Point(680, 282);
             this.buttoncloselist.Name = "buttoncloselist";
-            this.buttoncloselist.Size = new System.Drawing.Size(112, 31);
+            this.buttoncloselist.Size = new System.Drawing.Size(112, 49);
             this.buttoncloselist.TabIndex = 54;
             this.buttoncloselist.Text = "Zavrit seznam";
             this.buttoncloselist.UseVisualStyleBackColor = false;
@@ -971,7 +982,6 @@
         public System.Windows.Forms.Button backspace;
         public System.Windows.Forms.Button delete;
         public System.Windows.Forms.GroupBox groupBox1;
-        public System.IO.Ports.SerialPort serialPort1;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Button buttoncloselist;
     }
