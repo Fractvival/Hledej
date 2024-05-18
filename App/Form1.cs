@@ -239,6 +239,21 @@ namespace Hledej
         {
         }
 
+
+        public static class TextBoxHelper
+        {
+            public static void MoveCursorToEnd(TextBox textBox)
+            {
+                if (textBox == null) return;
+
+                textBox.BeginInvoke((MethodInvoker)delegate {
+                    textBox.SelectionStart = textBox.Text.Length;
+                    textBox.ScrollToCaret();
+                });
+            }
+        }
+
+
         public void ComReceived(object sender, SerialDataReceivedEventArgs e)
         {
             SerialPort serialPort = (SerialPort)sender;
@@ -247,6 +262,7 @@ namespace Hledej
                 // Zde aktualizujte obsah TextBoxu
                 findText.Text = data;
             });
+            TextBoxHelper.MoveCursorToEnd(findText);
             //find_Click(null, null);
         }
 
