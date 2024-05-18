@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Ports;
+using System.Linq;
 using System.Windows.Forms;
 using OfficeOpenXml;
 
@@ -72,6 +73,46 @@ namespace Hledej
             return parts;
         }
 
+
+        static Part FindPart(string partNumberOrKZM)
+        {
+            Part foundPart = parts.Find(p => p.PartNumber == partNumberOrKZM);
+
+            if (foundPart == null)
+            {
+                foundPart = parts.Find(p => p.KZM == partNumberOrKZM);
+            }
+
+            if (foundPart == null)
+            {
+                foundPart = new Part { KZM = "0" }; // Pokud se nic nenajde, vrátí Part s KZM = 0
+            }
+
+            return foundPart;
+        }
+
+
+        static List<Part> FindPartsByName(string Name)
+        {
+            List<Part> foundParts = parts.FindAll(p => p.Nazev.Contains(Name));
+            return foundParts;
+        }
+
+        static List<Part> FindPartsByAllName(string Name)
+        {
+            List<Part> foundParts = new List<Part>();
+
+            foreach (var part in parts)
+            {
+                if (part.Nazev.Equals(Name, StringComparison.OrdinalIgnoreCase) ||
+                    part.Nazev.IndexOf(Name, StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    foundParts.Add(part);
+                }
+            }
+
+            return foundParts;
+        }
 
         ComSetting ReadComSetting(string filePath)
         {
@@ -211,6 +252,50 @@ namespace Hledej
             }
         }
 
+        private void find_Click(object sender, EventArgs e)
+        {
+            if (findText.TextLength == 0)
+            {
+                Console.Beep(233, 80);
+                Console.Beep(233, 80);
+            }
+            else
+            {
+                Part tryFind = FindPart(findText.Text);
+                if (tryFind.KZM == "0")
+                {
+                    List<Part> listParts = FindPartsByAllName(findText.Text);
+                    if (listParts.Count == 0)
+                    {
+                        Console.Beep(233, 80);
+                        Console.Beep(233, 80);
+                    }
+                    else
+                    {
+                        listBox1.Items.Clear();
+                        for (int i = 0; i < listParts.Count; i++)
+                        {
+                            listBox1.Items.Add("KZM: " + listParts[i].KZM + " | " + 
+                                "PN: " + listParts[i].PartNumber + " | " +
+                                "Nazev: " + listParts[i].Nazev + " | " +
+                                "Misto: " + listParts[i].Umisteni);
+                        }
+                        listBox1.Show();
+                        buttoncloselist.Show();
+                    }
+                }
+                else 
+                { 
 
+                }
+            }
+        }
+
+        private void buttoncloselist_Click(object sender, EventArgs e)
+        {
+            listBox1.Items.Clear();
+            listBox1.Hide();
+            buttoncloselist.Hide();
+        }
     }
 }

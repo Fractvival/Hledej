@@ -89,6 +89,8 @@
             this.count = new System.Windows.Forms.Label();
             this.pos = new System.Windows.Forms.Label();
             this.name = new System.Windows.Forms.TextBox();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.buttoncloselist = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -623,6 +625,7 @@
             this.find.TabIndex = 44;
             this.find.Text = "HLEDEJ!";
             this.find.UseVisualStyleBackColor = false;
+            this.find.Click += new System.EventHandler(this.find_Click);
             // 
             // b32
             // 
@@ -746,6 +749,7 @@
             this.bminus.TabIndex = 8;
             this.bminus.Text = "-";
             this.bminus.UseVisualStyleBackColor = true;
+            this.bminus.Visible = false;
             // 
             // bplus
             // 
@@ -756,6 +760,7 @@
             this.bplus.TabIndex = 7;
             this.bplus.Text = "+";
             this.bplus.UseVisualStyleBackColor = true;
+            this.bplus.Visible = false;
             // 
             // label5
             // 
@@ -820,11 +825,36 @@
             this.name.Size = new System.Drawing.Size(470, 29);
             this.name.TabIndex = 1;
             // 
+            // listBox1
+            // 
+            this.listBox1.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Location = new System.Drawing.Point(11, 337);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(781, 290);
+            this.listBox1.TabIndex = 53;
+            this.listBox1.Visible = false;
+            // 
+            // buttoncloselist
+            // 
+            this.buttoncloselist.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.buttoncloselist.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.buttoncloselist.Location = new System.Drawing.Point(680, 300);
+            this.buttoncloselist.Name = "buttoncloselist";
+            this.buttoncloselist.Size = new System.Drawing.Size(112, 31);
+            this.buttoncloselist.TabIndex = 54;
+            this.buttoncloselist.Text = "Zavrit seznam";
+            this.buttoncloselist.UseVisualStyleBackColor = false;
+            this.buttoncloselist.Visible = false;
+            this.buttoncloselist.Click += new System.EventHandler(this.buttoncloselist_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(804, 663);
+            this.Controls.Add(this.buttoncloselist);
+            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.delete);
             this.Controls.Add(this.backspace);
@@ -942,6 +972,8 @@
         public System.Windows.Forms.Button delete;
         public System.Windows.Forms.GroupBox groupBox1;
         public System.IO.Ports.SerialPort serialPort1;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Button buttoncloselist;
     }
 }
 
