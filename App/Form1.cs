@@ -53,21 +53,29 @@ namespace Hledej
             List<Part> parts = new List<Part>();
             using (ExcelPackage package = new ExcelPackage(new FileInfo(filePath)))
             {
-                ExcelWorksheet worksheet = package.Workbook.Worksheets[0]; // První list
-                int rowCount = worksheet.Dimension.Rows;
-                int colCount = worksheet.Dimension.Columns;
-                for (int row = 2; row <= rowCount; row++) // Začínáme na druhém řádku, předpokládáme záhlaví na prvním řádku
+                try
                 {
-                    Part part = new Part();
-                    part.KZM = worksheet.Cells[row, 1].Value?.ToString();
-                    part.PartNumber = worksheet.Cells[row, 2].Value?.ToString();
-                    part.Nazev = $"{worksheet.Cells[row, 3].Value?.ToString()} {worksheet.Cells[row, 4].Value?.ToString()}".Trim(); // Sloučení Název1 a Název2 s mezerou
-                    part.Pocet = worksheet.Cells[row, 5].Value?.ToString();
-                    part.PocetInventura = worksheet.Cells[row, 6].Value?.ToString();
-                    part.Umisteni = worksheet.Cells[row, 7].Value?.ToString();
-                    part.Doplneno = worksheet.Cells[row, 8].Value?.ToString();
-                    // Přidání části do seznamu
-                    parts.Add(part);
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets[0]; // První list
+                    int rowCount = worksheet.Dimension.Rows;
+                    int colCount = worksheet.Dimension.Columns;
+                    for (int row = 2; row <= rowCount; row++) // Začínáme na druhém řádku, předpokládáme záhlaví na prvním řádku
+                    {
+                        Part part = new Part();
+                        part.KZM = worksheet.Cells[row, 1].Value?.ToString();
+                        part.PartNumber = worksheet.Cells[row, 2].Value?.ToString();
+                        part.Nazev = $"{worksheet.Cells[row, 3].Value?.ToString()} {worksheet.Cells[row, 4].Value?.ToString()}".Trim(); // Sloučení Název1 a Název2 s mezerou
+                        part.Pocet = worksheet.Cells[row, 5].Value?.ToString();
+                        part.PocetInventura = worksheet.Cells[row, 6].Value?.ToString();
+                        part.Umisteni = worksheet.Cells[row, 7].Value?.ToString();
+                        part.Doplneno = worksheet.Cells[row, 8].Value?.ToString();
+                        // Přidání části do seznamu
+                        parts.Add(part);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, @"Problem se souborem skladu", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Environment.Exit(0);
                 }
             }
             return parts;
@@ -217,7 +225,7 @@ namespace Hledej
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, @"Problem se souborem comset.txt pro nastaveni COM portu", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(ex.Message, @"Problem s nastavenim COM portu", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             parts = ReadPartsFromExcel(@"Sklad.xlsx");
         }
