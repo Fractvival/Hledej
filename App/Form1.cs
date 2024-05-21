@@ -221,7 +221,7 @@ namespace Hledej
                 port.Open();
                 if (!port.IsOpen)
                 {
-                    MessageBox.Show(@"Port COM nejde otevrit!", @"Chyba na COM portu", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(@"Port COM nejde otevřít!", @"Chyba na COM portu", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
@@ -230,7 +230,7 @@ namespace Hledej
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, @"Problem s nastavenim COM portu", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(ex.Message, @"Problém s nastavením COM portu", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             parts = ReadPartsFromExcel(@"Sklad.xlsx");
         }
@@ -242,28 +242,139 @@ namespace Hledej
 
         public static class TextBoxHelper
         {
-            public static void MoveCursorToEnd(TextBox textBox)
+            public static void MoveCursorToEnd(System.Windows.Forms.TextBox textBox)
             {
                 if (textBox == null) return;
-
                 textBox.BeginInvoke((MethodInvoker)delegate {
                     textBox.SelectionStart = textBox.Text.Length;
                     textBox.ScrollToCaret();
                 });
             }
+
+            public static void AppendTextAtCursorAndMoveCursorToEnd(System.Windows.Forms.TextBox textBox, string text)
+            {
+                if (textBox == null || text == null) return;
+
+                if (textBox.InvokeRequired)
+                {
+                    textBox.Invoke(new Action(() => AppendTextAtCursorAndMoveCursorToEnd(textBox, text)));
+                }
+                else
+                {
+                    // Uložení aktuálního pozice kurzoru
+                    int cursorPosition = textBox.SelectionStart;
+
+                    // Rozdělení textu na část před kurzorem a část za kurzorem
+                    string textBeforeCursor = textBox.Text.Substring(0, cursorPosition);
+                    string textAfterCursor = textBox.Text.Substring(cursorPosition);
+
+                    // Vložení nového textu na aktuální pozici kurzoru
+                    textBox.Text = textBeforeCursor + text + textAfterCursor;
+
+                    // Nastavení kurzoru za přidaný text
+                    textBox.SelectionStart = cursorPosition + text.Length;
+                    textBox.ScrollToCaret();
+                }
+            }
+
+
+            public static void RemoveCharacterAtCursor(System.Windows.Forms.TextBox textBox)
+            {
+                if (textBox == null || textBox.Text.Length == 0) return;
+
+                if (textBox.InvokeRequired)
+                {
+                    textBox.Invoke(new Action(() => RemoveCharacterAtCursor(textBox)));
+                }
+                else
+                {
+                    // Uložení aktuální pozice kurzoru
+                    int cursorPosition = textBox.SelectionStart;
+
+                    // Pokud je kurzor na začátku textu, smaž první znak
+                    if (cursorPosition == 0)
+                    {
+                        textBox.Text = textBox.Text.Substring(1);
+                        textBox.SelectionStart = 0;
+                    }
+                    // Pokud je kurzor za posledním znakem textu, smaž poslední znak
+                    else if (cursorPosition == textBox.Text.Length)
+                    {
+                        textBox.Text = textBox.Text.Substring(0, textBox.Text.Length - 1);
+                        textBox.SelectionStart = cursorPosition - 1;
+                    }
+                    // Pokud je kurzor uvnitř textu, smaž znak před kurzorem
+                    else
+                    {
+                        // Rozdělení textu na část před kurzorem a část za kurzorem
+                        string textBeforeCursor = textBox.Text.Substring(0, cursorPosition - 1);
+                        string textAfterCursor = textBox.Text.Substring(cursorPosition);
+
+                        // Aktualizace textu s odstraněním znaku na pozici kurzoru
+                        textBox.Text = textBeforeCursor + textAfterCursor;
+
+                        // Nastavení pozice kurzoru po smazání znaku
+                        textBox.SelectionStart = cursorPosition - 1;
+                    }
+
+                    textBox.ScrollToCaret();
+                }
+            }
+
+
+            public static void MoveCursorRight(System.Windows.Forms.TextBox textBox)
+            {
+                if (textBox == null) return;
+
+                if (textBox.InvokeRequired)
+                {
+                    textBox.Invoke(new Action(() => MoveCursorRight(textBox)));
+                }
+                else
+                {
+                    if (textBox.SelectionStart < textBox.Text.Length)
+                    {
+                        textBox.SelectionStart++;
+                        textBox.ScrollToCaret();
+                    }
+                }
+            }
+
+            public static void MoveCursorLeft(System.Windows.Forms.TextBox textBox)
+            {
+                if (textBox == null) return;
+
+                if (textBox.InvokeRequired)
+                {
+                    textBox.Invoke(new Action(() => MoveCursorLeft(textBox)));
+                }
+                else
+                {
+                    if (textBox.SelectionStart > 0)
+                    {
+                        textBox.SelectionStart--;
+                        textBox.ScrollToCaret();
+                    }
+                }
+            }
+
         }
 
 
         public void ComReceived(object sender, SerialDataReceivedEventArgs e)
         {
             SerialPort serialPort = (SerialPort)sender;
-            string data = serialPort.ReadExisting(); // Přečtení všech dostupných dat
+            string data = serialPort.ReadLine();//Rea.ReadExisting(); // Přečtení všech dostupných dat
+            serialPort.DiscardInBuffer();
             findText.Invoke((MethodInvoker)delegate {
-                // Zde aktualizujte obsah TextBoxu
+                findText.Focus();
+                findText.Text = "";
                 findText.Text = data;
             });
             TextBoxHelper.MoveCursorToEnd(findText);
-            //find_Click(null, null);
+            find.Invoke((MethodInvoker)delegate {
+                find.PerformClick();
+            });
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -283,27 +394,34 @@ namespace Hledej
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, @"Problem s uzavrenim COM portu", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(ex.Message, @"Problém s uzavřením COM portu", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
         private void find_Click(object sender, EventArgs e)
         {
-            if (findText.TextLength == 0)
+            string textBox = findText.Text;
+            textBox = textBox.Replace("\r", "");
+            if (textBox.Length == 0)
             {
-                Console.Beep(233, 80);
-                Console.Beep(233, 80);
+                Console.Beep(333, 150);
+                name.Text = "";
+                count.Text = "00000";
+                pos.Text = "00000";
+                findText.Focus();
             }
             else
             {
-                Part tryFind = FindPart(findText.Text);
+                Part tryFind = FindPart(textBox);
                 if (tryFind.KZM == "0")
                 {
-                    List<Part> listParts = FindPartsByAllName(findText.Text);
+                    List<Part> listParts = FindPartsByAllName(textBox);
                     if (listParts.Count == 0)
                     {
-                        Console.Beep(233, 80);
-                        Console.Beep(233, 80);
+                        Console.Beep(333, 150);
+                        name.Text = "";
+                        count.Text = "00000";
+                        pos.Text = "00000";
                         findText.Focus();
                     }
                     else
@@ -330,6 +448,8 @@ namespace Hledej
                     count.Text = tryFind.Pocet;
                     pos.Text = tryFind.Umisteni;
                     findText.Focus();
+                    Console.Beep(1233, 80);
+                    Console.Beep(1033, 80);
                 }
             }
         }
@@ -412,7 +532,6 @@ namespace Hledej
                 name.Text = ExtractNazevFromText(listBox1.SelectedItem.ToString());
                 count.Text = ExtractPocetFromText(listBox1.SelectedItem.ToString());
                 pos.Text = ExtractMistoFromText(listBox1.SelectedItem.ToString());
-                //listBox1.SelectedItem.
             }
         }
 
@@ -431,55 +550,282 @@ namespace Hledej
         // smaze cely text v editboxu
         private void delete_Click(object sender, EventArgs e)
         {
-
+            findText.Invoke((MethodInvoker)delegate {
+                findText.Text = "";
+                findText.Focus();
+            });
         }
 
         // smaze pismenko - stejne jako backspace
         private void backspace_Click(object sender, EventArgs e)
         {
-
+            TextBoxHelper.RemoveCharacterAtCursor(findText);
+            findText.Focus();
         }
 
         // mezernik
         private void bspace_Click(object sender, EventArgs e)
         {
-
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, " ");
+            findText.Focus();
         }
 
         // sipka vlevo
         private void bleft_Click(object sender, EventArgs e)
         {
-
+            TextBoxHelper.MoveCursorLeft(findText);
+            findText.Focus();
         }
 
         // sipka vpravo
         private void bright_Click(object sender, EventArgs e)
         {
-
+            TextBoxHelper.MoveCursorRight(findText);
+            findText.Focus();
         }
 
         // tecka
         private void bdot_Click(object sender, EventArgs e)
         {
-
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, ".");
+            findText.Focus();
         }
 
         // pomlcka
         private void bdash_Click(object sender, EventArgs e)
         {
-
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "-");
+            findText.Focus();
         }
 
         // text 32.
         private void b32_Click(object sender, EventArgs e)
         {
-
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "32.");
+            findText.Focus();
         }
 
         // text 320.
         private void b320_Click(object sender, EventArgs e)
         {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "320.");
+            findText.Focus();
+        }
 
+        private void b1_Click(object sender, EventArgs e)
+        {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "1");
+            findText.Focus();
+        }
+
+        private void b2_Click(object sender, EventArgs e)
+        {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "2");
+            findText.Focus();
+        }
+
+        private void b3_Click(object sender, EventArgs e)
+        {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "3");
+            findText.Focus();
+        }
+
+        private void b4_Click(object sender, EventArgs e)
+        {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "4");
+            findText.Focus();
+        }
+
+        private void b5_Click(object sender, EventArgs e)
+        {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "5");
+            findText.Focus();
+        }
+
+        private void b6_Click(object sender, EventArgs e)
+        {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "6");
+            findText.Focus();
+        }
+
+        private void b7_Click(object sender, EventArgs e)
+        {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "7");
+            findText.Focus();
+        }
+
+        private void b8_Click(object sender, EventArgs e)
+        {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "8");
+            findText.Focus();
+        }
+
+        private void b9_Click(object sender, EventArgs e)
+        {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "9");
+            findText.Focus();
+        }
+
+        private void b0_Click(object sender, EventArgs e)
+        {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "0");
+            findText.Focus();
+        }
+
+        private void bq_Click(object sender, EventArgs e)
+        {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "Q");
+            findText.Focus();
+        }
+
+        private void bw_Click(object sender, EventArgs e)
+        {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "W");
+            findText.Focus();
+        }
+
+        private void be_Click(object sender, EventArgs e)
+        {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "E");
+            findText.Focus();
+        }
+
+        private void br_Click(object sender, EventArgs e)
+        {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "R");
+            findText.Focus();
+        }
+
+        private void bt_Click(object sender, EventArgs e)
+        {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "T");
+            findText.Focus();
+        }
+
+        private void bz_Click(object sender, EventArgs e)
+        {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "Z");
+            findText.Focus();
+        }
+
+        private void bu_Click(object sender, EventArgs e)
+        {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "U");
+            findText.Focus();
+        }
+
+        private void bi_Click(object sender, EventArgs e)
+        {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "I");
+            findText.Focus();
+        }
+
+        private void bo_Click(object sender, EventArgs e)
+        {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "O");
+            findText.Focus();
+        }
+
+        private void bp_Click(object sender, EventArgs e)
+        {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "P");
+            findText.Focus();
+        }
+
+        private void ba_Click(object sender, EventArgs e)
+        {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "A");
+            findText.Focus();
+        }
+
+        private void bs_Click(object sender, EventArgs e)
+        {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "S");
+            findText.Focus();
+        }
+
+        private void bd_Click(object sender, EventArgs e)
+        {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "D");
+            findText.Focus();
+        }
+
+        private void bf_Click(object sender, EventArgs e)
+        {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "F");
+            findText.Focus();
+        }
+
+        private void bg_Click(object sender, EventArgs e)
+        {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "G");
+            findText.Focus();
+        }
+
+        private void bh_Click(object sender, EventArgs e)
+        {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "H");
+            findText.Focus();
+        }
+
+        private void bj_Click(object sender, EventArgs e)
+        {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "J");
+            findText.Focus();
+        }
+
+        private void bk_Click(object sender, EventArgs e)
+        {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "K");
+            findText.Focus();
+        }
+
+        private void bl_Click(object sender, EventArgs e)
+        {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "L");
+            findText.Focus();
+        }
+
+        private void by_Click(object sender, EventArgs e)
+        {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "Y");
+            findText.Focus();
+        }
+
+        private void bx_Click(object sender, EventArgs e)
+        {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "X");
+            findText.Focus();
+        }
+
+        private void bc_Click(object sender, EventArgs e)
+        {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "C");
+            findText.Focus();
+        }
+
+        private void bv_Click(object sender, EventArgs e)
+        {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "V");
+            findText.Focus();
+        }
+
+        private void bb_Click(object sender, EventArgs e)
+        {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "B");
+            findText.Focus();
+        }
+
+        private void bn_Click(object sender, EventArgs e)
+        {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "N");
+            findText.Focus();
+        }
+
+        private void bm_Click(object sender, EventArgs e)
+        {
+            TextBoxHelper.AppendTextAtCursorAndMoveCursorToEnd(findText, "M");
+            findText.Focus();
         }
     }
 }
